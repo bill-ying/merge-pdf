@@ -34,7 +34,7 @@ def _get_scan(is_lexmark):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description
-                                     ='Merge odd and even PDF pages from one side scanner into one PDF file.')
+                                     ='Merge front and back PDF pages from one side scanner into one PDF file.')
     parser.add_argument('path')
     parser.add_argument('-l', '--lexmark', action='store_true', help='for Lexmark X5470 scanner')
     args = parser.parse_args()
