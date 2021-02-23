@@ -34,8 +34,10 @@ def _get_scan(is_lexmark):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description
-                                     ='Merge front and back PDF pages from one side scanner into one PDF file.')
-    parser.add_argument('path')
+                                     ='Merge front and back PDF pages from scanned one side scanner into one PDF file.'
+                                      '  The merged files will be located in <input_directory>/output')
+    parser.add_argument('input_directory', help='the directory for front page and back page PDFs, contains a list of '
+                                                '<file>_front.pdf and <file>_back.pdf files')
     parser.add_argument('-l', '--lexmark', action='store_true', help='for Lexmark X5470 scanner')
     args = parser.parse_args()
     sys.exit(main(args.path, args.lexmark))

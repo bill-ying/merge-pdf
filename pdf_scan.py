@@ -14,7 +14,13 @@ class PdfScan:
 
     def merge_pdf(self, front_page_file_name):
         with open(front_page_file_name, 'rb') as file_front:
-            merge_file_name = front_page_file_name.replace(FRONT_PAGE_FILE, '.pdf')
+            merge_file_base_name = os.path.basename(front_page_file_name).replace(FRONT_PAGE_FILE, '.pdf')
+            output_directory = os.path.join(os.path.dirname(front_page_file_name), 'output')
+
+            if not os.path.exists(output_directory):
+                os.mkdir(output_directory)
+
+            merge_file_name = os.path.join(output_directory, merge_file_base_name)
             back_page_file_name = front_page_file_name.replace(FRONT_PAGE_FILE, BACK_PAGE_FILE)
 
             if not os.path.exists(back_page_file_name):
