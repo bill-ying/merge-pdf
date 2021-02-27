@@ -11,23 +11,27 @@ def main(input_directory, is_lexmark):
     return_code = 0
 
     if not os.path.exists(input_directory):
-        print('Error: path ' + input_directory + ' does not exist')
-        return_code = 1002
-    else:
-        file_name = os.path.join(input_directory, '*' + FRONT_PAGE_FILE)
-        pdf_file_list = glob.glob(file_name)
+        print('Error: ' + input_directory + ' does not exist')
 
-        if len(pdf_file_list) == 0:
-            print('No files to process.')
+        return_code = 1001
+    else:
+        file_to_search = os.path.join(input_directory, '*' + FRONT_PAGE_FILE)
+        front_page_pdf_files = glob.glob(file_to_search)
+
+        if len(front_page_pdf_files) == 0:
+            print('No file to process.')
         else:
             scan = _get_scan(is_lexmark)
 
-            for front_page_file_name in pdf_file_list:
+            for front_page_file_name in front_page_pdf_files:
                 scan.merge_pdf(front_page_file_name)
+
+            print(str(scan.count) + ' documents processed.')
 
     return return_code
 
 
+# Factory method pattern
 def _get_scan(is_lexmark):
     return LexmarkPdfScan() if is_lexmark else PdfScan()
 
@@ -40,4 +44,4 @@ if __name__ == "__main__":
                                                 '<file>_front.pdf and <file>_back.pdf files')
     parser.add_argument('-l', '--lexmark', action='store_true', help='for Lexmark X5470 scanner')
     args = parser.parse_args()
-    sys.exit(main(args.path, args.lexmark))
+        sys.exit(main(args.input_directory, args.lexmark))
