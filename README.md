@@ -8,6 +8,8 @@ For instance, a 20 pages document is typically scanned as following two PDF file
 
 To use this program, scanned files need to be renamed to filename_front.pdf and filename_back.pdf, and placed in input_directory. The merged file will be input_directory/output/filename.pdf.
 
+The program depends on package PyPDF2.
+
 Run the program with input_directory as argument:
 
 Example:

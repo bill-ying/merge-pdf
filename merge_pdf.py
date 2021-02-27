@@ -44,4 +44,4 @@ if __name__ == "__main__":
                                                 '<file>_front.pdf and <file>_back.pdf files')
     parser.add_argument('-l', '--lexmark', action='store_true', help='for Lexmark X5470 scanner')
     args = parser.parse_args()
-        sys.exit(main(args.input_directory, args.lexmark))
+    sys.exit(main(args.input_directory, args.lexmark))
