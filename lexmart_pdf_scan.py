@@ -7,9 +7,9 @@ class LexmarkPdfScan(PdfScan):
     def _merge_pdf(self):
         for page in itertools.chain.from_iterable(
                 itertools.zip_longest(
-                    self.pdf_front.pages,
-                    self.pdf_back.pages,  # Lexmark X5470
+                    self._pdf_front.pages,
+                    self._pdf_back.pages,  # Lexmark X5470
                 )
         ):
             if page:
-                self.pdf_merge.addPage(page)
+                self._pdf_merge.addPage(page)

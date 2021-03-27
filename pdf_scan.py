@@ -8,13 +8,14 @@ BACK_PAGE_FILE = '_back.pdf'
 
 
 class PdfScan:
-    pdf_merge = None
-    pdf_front = None
-    pdf_back = None
     count = 0
 
+    _pdf_merge = None
+    _pdf_front = None
+    _pdf_back = None
+
     def merge_pdf(self, front_page_file_name):
-        self.pdf_merge = PyPDF2.PdfFileWriter()
+        self._pdf_merge = PyPDF2.PdfFileWriter()
 
         with open(front_page_file_name, 'rb') as file_front_read:
             merge_file_base_name = os.path.basename(front_page_file_name).replace(FRONT_PAGE_FILE, '.pdf')
@@ -30,16 +31,16 @@ class PdfScan:
                 print('Error: Back page file ' + back_page_file_name + ' does not exist')
             else:
                 with open(back_page_file_name, 'rb') as file_back_read:
-                    self.pdf_front = PyPDF2.PdfFileReader(file_front_read)
-                    self.pdf_back = PyPDF2.PdfFileReader(file_back_read)
+                    self._pdf_front = PyPDF2.PdfFileReader(file_front_read)
+                    self._pdf_back = PyPDF2.PdfFileReader(file_back_read)
 
-                    if self.pdf_front.getNumPages() != self.pdf_back.getNumPages():
+                    if self._pdf_front.getNumPages() != self._pdf_back.getNumPages():
                         print("Error: Front and back have different page numbers for " + front_page_file_name)
                     else:
                         self._merge_pdf()
 
                         with open(merge_file_name, 'wb') as file_merge_write:
-                            self.pdf_merge.write(file_merge_write)
+                            self._pdf_merge.write(file_merge_write)
 
                         self.count += 1
 
@@ -48,9 +49,9 @@ class PdfScan:
     def _merge_pdf(self):
         for page in itertools.chain.from_iterable(
                 itertools.zip_longest(
-                    self.pdf_front.pages,
-                    reversed(self.pdf_back.pages),
+                    self._pdf_front.pages,
+                    reversed(self._pdf_back.pages),
                 )
         ):
             if page:
-                self.pdf_merge.addPage(page)
+                self._pdf_merge.addPage(page)
