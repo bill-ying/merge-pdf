@@ -13,12 +13,12 @@ The program depends on package PyPDF2.
 Run the program with input_directory as argument:
 
 Example:
-- python merge-pdf input_directory
+- python merge-pdf.py input_directory
 
 In rare cases, such as Lexmark X5470, the back page PDF starts with pages 2, 4, 6....  Add -l option when running the program.
 
 Example
-- python merge-pdf -l input_directory
+- python merge-pdf.py -l input_directory
 
 
 
