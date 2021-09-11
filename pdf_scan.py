@@ -1,5 +1,6 @@
 import itertools
 import os
+import re
 
 import PyPDF2
 
@@ -18,14 +19,15 @@ class PdfScan:
         self._pdf_merge = PyPDF2.PdfFileWriter()
 
         with open(front_page_file_name, 'rb') as file_front_read:
-            merge_file_base_name = os.path.basename(front_page_file_name).replace(FRONT_PAGE_FILE, '.pdf')
+            front_page_file_base_name = os.path.basename(front_page_file_name)
+            merge_file_base_name = re.sub(FRONT_PAGE_FILE, '.pdf', front_page_file_base_name, flags=re.IGNORECASE)
             output_directory = os.path.join(os.path.dirname(front_page_file_name), 'output')
 
             if not os.path.exists(output_directory):
                 os.mkdir(output_directory)
 
             merge_file_name = os.path.join(output_directory, merge_file_base_name)
-            back_page_file_name = front_page_file_name.replace(FRONT_PAGE_FILE, BACK_PAGE_FILE)
+            back_page_file_name = re.sub(FRONT_PAGE_FILE, BACK_PAGE_FILE, front_page_file_name, flags=re.IGNORECASE)
 
             if not os.path.exists(back_page_file_name):
                 print('Error: Back page file ' + back_page_file_name + ' does not exist')
