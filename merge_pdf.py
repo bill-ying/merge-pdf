@@ -1,3 +1,4 @@
+import concurrent.futures
 import glob
 import os
 import sys
@@ -21,18 +22,27 @@ def main(input_directory, is_lexmark):
         if len(front_page_pdf_files) == 0:
             print('No file to process.')
         else:
-            scan = _get_scan(is_lexmark)
+            output_directory = os.path.join(input_directory, 'output')
 
-            for front_page_file_name in front_page_pdf_files:
-                scan.merge_pdf(front_page_file_name)
+            if not os.path.exists(output_directory):
+                os.mkdir(output_directory)
 
-            print(str(scan.count) + ' documents processed.')
+            scan = __get_scan(is_lexmark)
+
+            # Use multi-processor for CPU bond operations
+            with concurrent.futures.ProcessPoolExecutor() as executor:
+                results = [executor.submit(scan.merge_pdf, f, output_directory) for f in front_page_pdf_files]
+
+            for result in concurrent.futures.as_completed(results):
+                print(result.result())
+
+            print('All documents have been processed.')
 
     return return_code
 
 
 # Factory method pattern
-def _get_scan(is_lexmark):
+def __get_scan(is_lexmark):
     return LexmarkPdfScan() if is_lexmark else PdfScan()
 
 
