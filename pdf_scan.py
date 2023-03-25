@@ -2,7 +2,7 @@ import itertools
 import os
 import re
 
-import PyPDF2
+import pypdf
 
 FRONT_PAGE_FILE = '_front.pdf'
 BACK_PAGE_FILE = '_back.pdf'
@@ -15,7 +15,7 @@ class PdfScan:
         self.__pdf_back = None
 
     def merge_pdf(self, front_page_file_name, output_directory):
-        self.__pdf_merge = PyPDF2.PdfFileWriter()
+        self.__pdf_merge = pypdf.PdfWriter()
 
         with open(front_page_file_name, 'rb') as file_front_read:
             front_page_file_base_name = os.path.basename(front_page_file_name)
@@ -27,10 +27,10 @@ class PdfScan:
                 print('Error: Back page file ' + back_page_file_name + ' does not exist')
             else:
                 with open(back_page_file_name, 'rb') as file_back_read:
-                    self.__pdf_front = PyPDF2.PdfFileReader(file_front_read)
-                    self.__pdf_back = PyPDF2.PdfFileReader(file_back_read)
+                    self.__pdf_front = pypdf.PdfReader(file_front_read)
+                    self.__pdf_back = pypdf.PdfReader(file_back_read)
 
-                    if self.__pdf_front.getNumPages() != self.__pdf_back.getNumPages():
+                    if len(self.__pdf_front.pages) != len(self.__pdf_back.pages):
                         print("Error: Front and back have different page numbers for " + front_page_file_name)
                     else:
                         self._merge_pdf()
@@ -48,4 +48,4 @@ class PdfScan:
                 )
         ):
             if page:
-                self.__pdf_merge.addPage(page)
+                self.__pdf_merge.add_page(page)
