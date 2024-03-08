@@ -15,10 +15,10 @@ Run the program with input_directory as argument:
 Example:
 - python merge_pdf.py input_directory
 
-In rare cases, such as Lexmark X5470, the back page PDF starts with pages 2, 4, 6....  Add -l option when running the program.
+In rare cases, such as Lexmark X5470, the back page PDF starts with pages 2, 4, 6....  Add -r option when running the program.
 
 Example
-- python merge_pdf.py -l input_directory
+- python merge_pdf.py -r input_directory
 
 
 

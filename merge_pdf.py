@@ -52,6 +52,6 @@ if __name__ == "__main__":
                                       '  The merged files will be located in <input_directory>/output')
     parser.add_argument('input_directory', help='the directory for front page and back page PDFs, contains a list of '
                                                 '<file>_front.pdf and <file>_back.pdf files')
-    parser.add_argument('-l', '--lexmark', action='store_true', help='for Lexmark X5470 scanner')
+    parser.add_argument('-r', '--reverse', action='store_true', help='for Lexmark X5470 scanner')
     args = parser.parse_args()
-    sys.exit(main(args.input_directory, args.lexmark))
+    sys.exit(main(args.input_directory, args.reverse))
